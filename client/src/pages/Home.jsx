@@ -185,7 +185,7 @@ export default function Home() {
               <img 
                 src="/images/director-shahid.png" 
                 alt="Mohmmad Shahid, Director &amp; Owner of Glorax Metal Recycling" 
-                className="w-full h-auto object-cover max-h-[360px]"
+                className="w-full h-auto object-cover object-top max-h-[420px]"
                 loading="lazy"
               />
             </div>
