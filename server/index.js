@@ -44,7 +44,11 @@ const isDummySMTP = !process.env.SMTP_HOST ||
                      process.env.SMTP_HOST.includes('smtp.gmail.com') && process.env.SMTP_PASS === 'placeholder_pass' ||
                      process.env.SMTP_PASS === 'your_email_password';
 
+console.log(`📧 SMTP Config → Host: ${process.env.SMTP_HOST || 'NOT SET'}, Port: ${process.env.SMTP_PORT || 'NOT SET'}, User: ${process.env.SMTP_USER || 'NOT SET'}, Pass: ${process.env.SMTP_PASS ? '[SET]' : 'NOT SET'}, isDummySMTP: ${isDummySMTP}`);
+
 let transporter;
+let smtpStatus = { ready: false, error: null };
+
 if (!isDummySMTP) {
   transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -59,19 +63,33 @@ if (!isDummySMTP) {
   // Verify transporter connection
   transporter.verify((error, success) => {
     if (error) {
-      console.warn('⚠️ SMTP Transporter configuration verification failed. Server will fall back to log-only mode for email sending.', error.message);
+      console.error('❌ SMTP VERIFY FAILED:', error.message, '| Code:', error.code);
+      smtpStatus = { ready: false, error: error.message };
       transporter = null;
     } else {
       console.log('✅ Mail server is ready to take messages');
+      smtpStatus = { ready: true, error: null };
     }
   });
 } else {
   console.log('ℹ️ Running with placeholder SMTP configuration. Emails will be logged to the console instead of sent.');
+  smtpStatus = { ready: false, error: 'Placeholder credentials detected' };
 }
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
+});
+
+// SMTP status check endpoint (for debugging)
+app.get('/api/smtp-status', (req, res) => {
+  res.status(200).json({
+    smtpReady: smtpStatus.ready,
+    smtpError: smtpStatus.error,
+    smtpUser: process.env.SMTP_USER || 'NOT SET',
+    smtpHost: process.env.SMTP_HOST || 'NOT SET',
+    isDummyMode: isDummySMTP
+  });
 });
 
 // Contact/Enquiry Form submission endpoint
