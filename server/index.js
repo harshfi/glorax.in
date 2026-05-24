@@ -17,10 +17,11 @@ app.use(morgan('dev'));
 // CORS configuration
 const allowedOrigins = [
   process.env.CLIENT_URL || 'http://localhost:5173',
+  process.env.CLIENT_URL_2, // e.g. your Vercel deployment URL
   'http://localhost:3000',
   'https://glorax.in',
   'https://www.glorax.in'
-];
+].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
