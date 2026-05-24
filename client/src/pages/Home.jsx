@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShieldCheck, MapPin, PhoneCall, Award, ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react';
@@ -54,6 +54,15 @@ const productsHighlight = [
 
 export default function Home() {
   const navigate = useNavigate();
+
+  // Per-page SEO
+  useEffect(() => {
+    document.title = 'Glorax Metal Recycling | Buy & Sell Copper Scrap | Sonipat, Haryana';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Glorax Metal Recycling Pvt. Ltd. — India\'s trusted copper scrap supplier. High-quality copper strips, rassa, tally, AC pipes & dori. GST registered, Sonipat, Haryana. Pan-India delivery.'
+    );
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://glorax.in/');
+  }, []);
 
   return (
     <div className="w-full">

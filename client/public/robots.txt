@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Disallow server/API routes
+Disallow: /api/
+
+Sitemap: https://glorax.in/sitemap.xml

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Landmark, Calendar, FileText, MapPin, BadgeCheck, Users2 } from 'lucide-react';
 
@@ -10,6 +10,14 @@ const companyDetails = [
 ];
 
 export default function About() {
+  useEffect(() => {
+    document.title = 'About Glorax Metal Recycling | GST Registered Copper Scrap Dealer Haryana';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Glorax Metal Recycling Pvt. Ltd. — established 2023, Sonipat Haryana. GST registered private limited company (GSTIN: 06AAJCV6761B1ZA) specializing in non-ferrous copper scrap recycling. Trusted by OfBusiness, Recykal & Adani Copper.'
+    );
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://glorax.in/about');
+  }, []);
+
   return (
     <div className="w-full">
       {/* Header */}

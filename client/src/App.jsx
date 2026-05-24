@@ -20,71 +20,141 @@ function ScrollToTop() {
   return null;
 }
 
-// LocalBusiness JSON-LD Schema Markup Injector
+// LocalBusiness + Organization + FAQPage JSON-LD Schema Markup
 function SchemaMarkup() {
   useEffect(() => {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Glorax Metal Recycling Private Limited",
-      "image": "https://glorax.in/images/hero-bg.svg",
-      "@id": "https://glorax.in/#glorax-recycling",
-      "url": "https://glorax.in",
-      "telephone": "+919971721279",
-      "email": "contact@glorax.in",
-      "priceRange": "$$$",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "HSIIDC Industrial Estate Phase 1, Plot No. 1830, Sector 38, Rai Industrial Area",
-        "addressLocality": "Sonipat",
-        "addressRegion": "Haryana",
-        "postalCode": "131029",
-        "addressCountry": "IN"
+    const schemas = [
+      // 1. LocalBusiness + Organization combined
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": ["LocalBusiness", "Organization"],
+            "@id": "https://glorax.in/#organization",
+            "name": "Glorax Metal Recycling Private Limited",
+            "alternateName": ["Glorax Metal Recycling", "Glorax Copper", "Glorax Recycling"],
+            "url": "https://glorax.in",
+            "logo": "https://glorax.in/images/glorax-logo.png",
+            "image": "https://glorax.in/images/hero-bg.svg",
+            "description": "India's trusted supplier of high-purity copper scrap — Strips, Rassa, Tally, AC Pipes and Dori. GST registered private limited company based in Rai Industrial Area, Sonipat, Haryana. Pan-India delivery.",
+            "foundingDate": "2023-11-03",
+            "telephone": "+919971721279",
+            "email": "contact@glorax.in",
+            "vatID": "06AAJCV6761B1ZA",
+            "legalName": "Glorax Metal Recycling Private Limited",
+            "priceRange": "$$$",
+            "currenciesAccepted": "INR",
+            "paymentAccepted": "Bank Transfer, UPI, Cheque",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "HSIIDC Industrial Estate Phase 1, Plot No. 1830, Sector 38, Rai Industrial Area",
+              "addressLocality": "Sonipat",
+              "addressRegion": "Haryana",
+              "postalCode": "131029",
+              "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 28.9664,
+              "longitude": 77.1082
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "India"
+            },
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+              "opens": "09:00",
+              "closes": "18:00"
+            },
+            "sameAs": [
+              "https://glorax.in"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Copper Scrap Products",
+              "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Copper Strips (Patti)", "description": "Flat copper strips 99.9% purity for transformers, busbars and electrical winding applications." } },
+                { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Copper Rassa (Wire)", "description": "High-conductivity Millberry bare copper wire scrap 99.9% purity for re-drawing." } },
+                { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Copper Tally", "description": "Refined copper tally pieces 97-99% purity for smelting foundries." } },
+                { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "AC Pipes (Copper Tubes)", "description": "DHP grade copper pipes and tubes from HVAC systems." } },
+                { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Copper Dori", "description": "Fine copper wire bundles 99.9% purity for motor rewinding and cable manufacturing." } }
+              ]
+            }
+          }
+        ]
       },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 28.9664,
-        "longitude": 77.1082
+      // 2. FAQPage schema — drives Google featured snippets
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What copper scrap products does Glorax Metal Recycling supply?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Glorax Metal Recycling supplies five primary copper scrap categories: Copper Strips (Patti) for transformer and busbar use, Copper Rassa (Millberry bare wire) for re-drawing, Copper Tally for foundry smelting, AC Copper Pipes (DHP grade) from HVAC systems, and Copper Dori (hair wire) for motor rewinding. All products are GST invoiced with full documentation." }
+          },
+          {
+            "@type": "Question",
+            "name": "Where is Glorax Metal Recycling located?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Glorax Metal Recycling Private Limited is located at Plot No. 1830, Sector 38, HSIIDC Industrial Estate Phase 1, Rai Industrial Area, Sonipat, Haryana — 131029, India. We serve buyers across all major industrial cities in India." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Glorax Metal Recycling GST registered?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, Glorax Metal Recycling Private Limited is a fully GST-registered company with GSTIN 06AAJCV6761B1ZA, operating as a Regular taxpayer incorporated under the Registrar of Companies, Haryana since November 2023." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you deliver copper scrap across India?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes, Glorax Metal Recycling has a pan-India logistics network and delivers to major industrial hubs including Delhi NCR, Mumbai, Ahmedabad, Rajkot, Ludhiana, Chennai, Bengaluru, Hyderabad, Kolkata, and more. We coordinate with reliable freight partners for timely delivery." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the purity of copper scrap at Glorax?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Copper Strips and Rassa carry minimum 99.9% copper purity (ETP/Millberry grade). Copper Tally ranges from 97% to 99% purity. AC Pipes are DHP (Deoxidized High Phosphorus) grade copper. All products are inspected and graded before dispatch." }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I contact Glorax Metal Recycling for bulk orders?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You can contact Glorax Metal Recycling at +91 99717 21279 (call or WhatsApp), email contact@glorax.in, or submit an enquiry through the contact form at glorax.in/contact. We respond within 24 hours on business days." }
+          }
+        ]
       },
-      "vatID": "06AAJCV6761B1ZA",
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday"
-        ],
-        "opens": "09:00",
-        "closes": "18:00"
+      // 3. BreadcrumbList schema
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://glorax.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Products", "item": "https://glorax.in/products" },
+          { "@type": "ListItem", "position": 3, "name": "About", "item": "https://glorax.in/about" },
+          { "@type": "ListItem", "position": 4, "name": "Contact", "item": "https://glorax.in/contact" }
+        ]
       }
-    };
+    ];
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.id = 'glorax-schema-jsonld';
-    script.innerHTML = JSON.stringify(schema);
-
-    // Clean up existing schema if it exists
-    const existing = document.getElementById('glorax-schema-jsonld');
-    if (existing) {
-      existing.remove();
-    }
-
-    document.head.appendChild(script);
+    // Inject all schemas
+    schemas.forEach((schema, i) => {
+      const id = `glorax-schema-${i}`;
+      const existing = document.getElementById(id);
+      if (existing) existing.remove();
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.id = id;
+      script.innerHTML = JSON.stringify(schema);
+      document.head.appendChild(script);
+    });
 
     return () => {
-      const addedScript = document.getElementById('glorax-schema-jsonld');
-      if (addedScript) {
-        addedScript.remove();
-      }
+      [0, 1, 2].forEach(i => document.getElementById(`glorax-schema-${i}`)?.remove());
     };
   }, []);
 
   return null;
 }
+
 
 function AppContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

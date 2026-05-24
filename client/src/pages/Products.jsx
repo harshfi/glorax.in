@@ -174,11 +174,52 @@ export default function Products() {
   const location = useLocation();
 
   useEffect(() => {
+    // Per-page SEO
+    document.title = 'Copper Strips, Rassa, Tally, AC Pipes & Dori | Glorax Metal Recycling Products';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Buy high-purity copper scrap products — Copper Strips (Patti), Rassa (Wire), Tally, AC Pipes, Dori. GST compliant supplier in Haryana. Bulk orders, pan-India delivery. Call +91 99717 21279.'
+    );
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://glorax.in/products');
+
+    // Inject Product JSON-LD schemas
+    const productSchema = {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Copper Scrap Products — Glorax Metal Recycling",
+      "description": "High-purity copper scrap and non-ferrous metal products available for bulk purchase across India.",
+      "url": "https://glorax.in/products",
+      "numberOfItems": 5,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Copper Strips (Patti)", "url": "https://glorax.in/products#strips",
+          "description": "Flat copper strips for electrical transformers, busbars and winding. Purity 99.9% min. ETP and oxygen-free grades available." },
+        { "@type": "ListItem", "position": 2, "name": "Copper Rassa (Wire)", "url": "https://glorax.in/products#rassa",
+          "description": "High-conductivity bare copper wire scrap (Millberry grade) for re-drawing. 99.9% purity." },
+        { "@type": "ListItem", "position": 3, "name": "Copper Tally", "url": "https://glorax.in/products#tally",
+          "description": "Refined copper tally pieces 97-99% purity for smelting foundries and secondary copper production." },
+        { "@type": "ListItem", "position": 4, "name": "AC Pipes (Copper Tubes)", "url": "https://glorax.in/products#ac-pipes",
+          "description": "Recovered copper pipes and tubes from HVAC/AC units. DHP grade, sorted in compressed bundles." },
+        { "@type": "ListItem", "position": 5, "name": "Copper Dori", "url": "https://glorax.in/products#dori",
+          "description": "Fine copper wire bundles (hair wire/winding wire). 99.9% purity for motor rewinding and cable manufacturing." }
+      ]
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'products-schema-jsonld';
+    script.innerHTML = JSON.stringify(productSchema);
+    const existing = document.getElementById('products-schema-jsonld');
+    if (existing) existing.remove();
+    document.head.appendChild(script);
+
+    return () => {
+      document.getElementById('products-schema-jsonld')?.remove();
+    };
+  }, []);
+
+  useEffect(() => {
     // Check if URL has hash (e.g. #rassa) and scroll to that element
     if (location.hash) {
       const element = document.getElementById(location.hash.substring(1));
       if (element) {
-        // Delay slightly for render transitions
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 150);
@@ -297,6 +338,39 @@ export default function Products() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* FAQ Section — targets Google featured snippets */}
+      <section className="py-20 bg-bg-warm border-t border-[#EBEAE6]">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
+          <div className="text-center mb-12">
+            <span className="font-condensed tracking-widest font-bold text-xs uppercase text-transparent bg-clip-text bg-gradient-to-r from-accent to-amber-accent block mb-3">
+              ◆ Common Questions ◆
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-heading font-black text-[#111] uppercase tracking-tight">
+              Copper Scrap — Frequently Asked Questions
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {[
+              { q: "What types of copper scrap does Glorax supply?", a: "Glorax Metal Recycling supplies five primary copper scrap categories: Copper Strips (Patti) for transformer & busbar use, Copper Rassa (bare wire/Millberry) for re-drawing, Copper Tally for smelting, AC Pipes (DHP copper tubes) from HVAC systems, and Copper Dori (hair wire) for motor rewinding. All grades are available for bulk orders with full GST invoicing." },
+              { q: "What is the minimum order quantity for copper scrap?", a: "We cater to both small and large bulk buyers. Minimum order quantities vary by product — typically starting from 100 kg for retail and 1 MT+ for wholesale/industrial supply. Contact us at +91 99717 21279 for specific order requirements." },
+              { q: "Do you supply copper scrap across all of India?", a: "Yes. Glorax Metal Recycling has a pan-India logistics network enabling delivery to major industrial hubs including Delhi NCR, Mumbai, Ahmedabad, Chennai, Bengaluru, Hyderabad, Kolkata, Rajkot, and Ludhiana. We partner with reliable freight carriers for timely delivery." },
+              { q: "What is the purity of your copper scrap products?", a: "Our copper scrap products are rigorously graded. Copper Strips and Rassa carry a minimum 99.9% copper purity (ETP/Millberry grade). Copper Tally ranges from 97% to 99% purity. AC Pipes are DHP grade copper. All products undergo quality inspection before dispatch." },
+              { q: "Is Glorax Metal Recycling GST registered?", a: "Yes. Glorax Metal Recycling Private Limited is a fully GST-registered company with GSTIN 06AAJCV6761B1ZA, incorporated under the Registrar of Companies, Haryana. We provide complete documentation including GST invoices, e-way bills, and weight certificates for every transaction." }
+            ].map((faq, idx) => (
+              <details key={idx} className="bg-white border border-[#EBEAE6] rounded-xl shadow-sm group">
+                <summary className="flex items-center justify-between p-5 cursor-pointer font-sans font-bold text-sm text-[#1A1A1A] list-none">
+                  <span>{faq.q}</span>
+                  <HelpCircle className="h-4 w-4 text-accent flex-shrink-0 ml-4" />
+                </summary>
+                <div className="px-5 pb-5 font-sans text-sm text-secondary-text leading-relaxed border-t border-gray-100 pt-4">
+                  {faq.a}
+                </div>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 

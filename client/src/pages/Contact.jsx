@@ -37,8 +37,17 @@ export default function Contact() {
   const [searchParams] = useSearchParams();
   const initialProduct = searchParams.get('product') || "All Products";
 
-  const [submitStatus, setSubmitStatus] = useState(null); // 'loading' | 'success' | 'error'
+  const [submitStatus, setSubmitStatus] = useState(null);
   const [statusMessage, setStatusMessage] = useState("");
+
+  // Per-page SEO
+  useEffect(() => {
+    document.title = 'Contact Glorax Metal Recycling | Copper Scrap Enquiry | +91 99717 21279';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Get in touch with Glorax Metal Recycling for copper scrap pricing, bulk orders, and delivery. Call +91 99717 21279 or email contact@glorax.in. Based in Rai Industrial Area, Sonipat, Haryana.'
+    );
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://glorax.in/contact');
+  }, []);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(contactSchema),
