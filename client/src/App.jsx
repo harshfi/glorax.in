@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import DriverApp from './pages/DriverApp';
 
 // Scroll To Top Component on Navigation
 function ScrollToTop() {
@@ -249,6 +250,18 @@ function AppContent() {
             >
               Contact
             </NavLink>
+            <NavLink
+              to="/driver-app"
+              className={({ isActive }) =>
+                `font-sans flex items-center gap-1 font-semibold text-xs uppercase tracking-widest transition-all duration-200 ${isActive
+                  ? 'text-accent border-b-2 border-accent pb-0.5'
+                  : 'text-[#333] hover:text-accent'
+                }`
+              }
+            >
+              Driver App
+              <span className="bg-accent text-primary text-[8px] font-bold px-1.5 py-0.5 rounded-sm">NEW</span>
+            </NavLink>
           </nav>
 
           {/* Right Side CTAs */}
@@ -327,6 +340,17 @@ function AppContent() {
                 >
                   Contact
                 </NavLink>
+                <NavLink
+                  to="/driver-app"
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `font-sans font-bold text-sm uppercase tracking-wide border-b border-gray-100 pb-2 flex items-center justify-between ${isActive ? 'text-accent' : 'text-[#333]'
+                    }`
+                  }
+                >
+                  Driver App
+                  <span className="bg-accent text-primary text-[9px] font-bold px-2 py-0.5 rounded-full">NEW</span>
+                </NavLink>
               </div>
 
               {/* Mobile Drawer Footer Contacts */}
@@ -362,6 +386,7 @@ function AppContent() {
           <Route path="/products" element={<Products />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/driver-app" element={<DriverApp />} />
         </Routes>
       </main>
 
@@ -423,6 +448,7 @@ function AppContent() {
               <Link to="/products" className="hover:text-accent transition-colors">Products</Link>
               <Link to="/about" className="hover:text-accent transition-colors">About Us</Link>
               <Link to="/contact" className="hover:text-accent transition-colors">Contact</Link>
+              <Link to="/driver-app" className="hover:text-accent transition-colors flex items-center gap-2">Driver App <span className="bg-accent text-primary text-[8px] font-bold px-1.5 py-0.5 rounded-sm">APP</span></Link>
             </div>
           </div>
 
